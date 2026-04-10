@@ -1,0 +1,19 @@
+# Duo Wealth — Python Dependencies
+# Phase 1A: Data Foundation
+
+# Database
+psycopg[binary]==3.2.*    # PostgreSQL adapter (modern async-capable)
+sqlalchemy==2.0.*          # ORM / query builder
+
+# Analytical
+duckdb==1.2.*              # Embedded analytical engine
+pyarrow==18.*              # Parquet read/write
+pandas==2.2.*              # DataFrame operations
+
+# Testing
+pytest==8.*
+pytest-cov==6.*
+
+# Utilities
+python-dotenv==1.0.*       # .env file loading
+httpx==0.28.*              # HTTP client (EDGAR, OpenFIGI API calls)
