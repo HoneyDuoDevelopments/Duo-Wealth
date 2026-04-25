@@ -29,7 +29,14 @@ This ADR formalizes the architectural corollaries of ADR-002 so that ADR-002's p
 | Duo Wealth | Local (Ubuntu workstation) | Stooq + yfinance + IBKR + FRD (personal license) | Pipeline output from public-domain sources | Personal trading research and execution |
 | DataDuo | Cloud VPS | Public-domain sources only (Stooq, yfinance, user-provided CSV) | Pipeline output from public-domain sources | Public three-part product: Enrichment API, Build-Your-Own-Warehouse methodology, Comparative Truth Engine — never prices |
 
-**FRD is a validator, not a source of truth.** The pipeline must produce correct output in FRD's absence. The pipeline ingests FRD as one price source for Warehouse B (the premium-price-validation arm of the three-warehouse protocol) and for Warehouse C (the pipeline-logic-parity arm). FRD does not participate in DataDuo at any layer.
+**FRD is treated as one adapter among many; the pipeline never trusts FRD's adjustments.** The FRD adapter ingests FRD's data, reverses whatever adjustment state FRD provides back to unadjusted raw, and the pipeline re-applies its own EDGAR-derived adjustment factors. If FRD's adjustments differ from the pipeline's, the pipeline is the truth — same posture the pipeline takes toward Stooq, yfinance, IBKR, FRD, or user-provided CSV. The pipeline functions identically when ingesting from any adapter, so FRD is not a load-bearing dependency for pipeline operation.
+
+FRD plays two distinct roles in the three-warehouse protocol, neither of which is "primary source for pipeline logic":
+
+1. **One-time historical bootstrap source for Warehouse B (Duo Wealth's permanent production warehouse).** The pipeline ingests FRD historical exactly once through the FRD adapter during B's initial bootstrap. After bootstrap, B is maintained forward by IBKR daily ingestion alone. FRD is not in B's operational loop thereafter.
+2. **Ongoing comparison reference for Warehouse C (the temporary pipeline-logic-parity arm).** The pipeline ingests fresh FRD data on rolling dates and compares its own enrichment output against FRD's native output. This continues only as long as FRD update access is maintained; Warehouse C is dismantled when that access ends.
+
+FRD does not participate in DataDuo at any layer.
 
 **Multi-source price adapter layer (M1g).** All price sources implement a common adapter interface that normalizes source output to a canonical schema with provenance metadata. Pipeline enrichment runs identically against any adapter's output. Adding a new source does not touch pipeline logic.
 
@@ -59,7 +66,7 @@ This ADR formalizes the architectural corollaries of ADR-002 so that ADR-002's p
 - Pipeline is genuinely source-agnostic for prices — new sources plug in without touching enrichment logic
 - Three-warehouse validation protocol produces measurable accuracy deltas (the evidentiary basis for the Comparative Truth Engine)
 - DataDuo's legal posture is clean — no personal-license data is ever served
-- Loss of FRD access is a validation-accuracy degradation, not a system failure
+- Loss of FRD access does not degrade pipeline operation. Before Warehouse B's historical bootstrap completes, it forces fallback to public-domain historical with measurably worse delisted-ticker coverage. After B's bootstrap completes, it has zero operational impact on B (maintained forward by IBKR alone) or A (which never depended on FRD); it ends Warehouse C's specific pipeline-logic-parity comparison, by design — C is a temporary warehouse bounded by FRD update access.
 - Lifecycle-first build order eliminates survivorship bias by construction, not as an afterthought
 
 **Constrains:**
@@ -72,6 +79,7 @@ This ADR formalizes the architectural corollaries of ADR-002 so that ADR-002's p
 - Universe and lifecycle registries are cold-started from public-domain sources covering 2005–present; forward maintenance is automated ingestion of scheduled public releases (SEC EDGAR, N-PORT, fja05680 updates, datasets/s-and-p-500-companies)
 - DataDuo VPS deployment never receives FRD or IBKR data — enforced at the adapter-registration layer
 - Three-warehouse builds run in parallel during Phase B validation; tolerance thresholds are measured empirically and recorded in `contracts/validation-protocol.md`
+- Warehouse A and Warehouse B persist after Phase B validation completes; Warehouse C is dismantled when FRD update access ends. The Comparative Truth Engine consumes ongoing A-vs-B scorecard deltas indefinitely after Phase B.
 
 **Key risk:**
 - Adapter reverse-adjustment logic is the highest-risk component — getting it wrong silently corrupts every downstream value. Mitigated by three-warehouse cross-validation (Warehouses A, B, C must align within measured tolerance), FRD native output as Warehouse C reference, and per-adapter unit tests on known corporate action sequences.

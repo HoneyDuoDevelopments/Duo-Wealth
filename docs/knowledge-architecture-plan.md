@@ -49,7 +49,7 @@ If a module spec contradicts the blueprint, the blueprint wins and the spec must
 
 - **Docs use stable filenames.** `m01-data-layer.md` doesn’t become `m01-data-layer-v2.md`. The file persists, the content evolves.
 - **`blueprint.md` version increments only on architecture changes.** Adding implementation detail doesn’t bump the version. Adding a module does.
-- **ADRs are immutable except status field.** Once accepted, the body doesn’t change. If the decision is reversed, write a new ADR that supersedes it and update the old ADR’s status to “Superseded by ADR-XXX.”
+- **ADRs are immutable except status field.** Once accepted, the body doesn’t change. If the decision is reversed, write a new ADR that supersedes it and update the old ADR’s status to “Superseded by ADR-XXX.” ADR bodies are immutable after their authoring audit cycle completes; in-cycle wording refinements are part of producing the ADR, not amending it. Once the cycle that produced the ADR closes (typically a single audit or design session that ends with a commit), the body locks.
 - **Module specs get changelog entries, not silent rewrites.** Every meaningful change to a spec gets a dated entry at the bottom so you can see how the design evolved.
 
 -----
@@ -65,16 +65,24 @@ honeyduo-wealth/
 │   ├── blueprint.md                   # System blueprint (v0.2.1 — the end-state definition)
 │   │
 │   ├── contracts/                     # Shared interface specifications
-│   │   ├── strategy-contract.md       # Interface every strategy implements
-│   │   ├── scorecard-format.md        # Standardized evaluation output
-│   │   ├── run-manifest-format.md     # What every run records
-│   │   ├── kill-record-format.md      # What gets logged when a strategy dies
-│   │   ├── promotion-demotion-rules.md # Canonical gate criteria at each transition
-│   │   ├── alert-event-schema.md      # Standardized event format for notifications
-│   │   └── broker-abstraction.md      # Internal interface for broker interaction
+│   │   ├── price-source-adapter.md    # Interface every price source adapter implements (written 2026-04-19)
+│   │   ├── reconciliation-report-schema.md # Discrepancy record format from M1h (written 2026-04-19)
+│   │   ├── validation-protocol.md     # Three-warehouse validation methodology (written 2026-04-19)
+│   │   ├── data-provenance-schema.md  # Provenance metadata format (written 2026-04-19)
+│   │   ├── strategy-contract.md       # Interface every strategy implements (Phase 1B)
+│   │   ├── scorecard-format.md        # Standardized evaluation output (Phase 1C)
+│   │   ├── run-manifest-format.md     # What every run records (Phase 1C)
+│   │   ├── kill-record-format.md      # What gets logged when a strategy dies (Phase 2B)
+│   │   ├── promotion-demotion-rules.md # Canonical gate criteria at each transition (Phase 2A)
+│   │   ├── alert-event-schema.md      # Standardized event format for notifications (Phase 3B)
+│   │   └── broker-abstraction.md      # Internal interface for broker interaction (Phase 2A)
 │   │
 │   ├── modules/                       # One spec per module (written when module is being built)
 │   │   ├── m01-data-layer.md
+│   │   ├── m01d-universe-manager.md         # Phase 1A-A1 deliverable
+│   │   ├── m01f-lifecycle-registry.md       # Phase 1A-A1 deliverable
+│   │   ├── m01g-price-source-adapters.md    # Phase 1A-A2 deliverable
+│   │   ├── m01h-reconciliation-engine.md    # Phase 1A-A3 deliverable
 │   │   ├── m02-strategy-factory.md
 │   │   ├── m03-feature-registry.md
 │   │   ├── m04-backtest-engine.md
@@ -92,19 +100,25 @@ honeyduo-wealth/
 │   │
 │   ├── adrs/                          # Architecture Decision Records
 │   │   ├── ADR-000-template.md        # Template for new ADRs
-│   │   ├── ADR-001-vectorbt-as-backtest-core.md
-│   │   ├── ADR-002-ib-insync-provisional.md
-│   │   └── ADR-003-mysql-data-storage.md
+│   │   ├── ADR-001-storage-architecture.md  # PostgreSQL + Parquet + DuckDB (Accepted 2026-04-09)
+│   │   ├── ADR-002-data-provider-stack.md   # Multi-source price + redistributable enrichment (Accepted 2026-04-09)
+│   │   └── ADR-003-independent-public-domain-pipeline-architecture.md  # Two-deployment, FRD-as-validator, multi-source adapter (Accepted 2026-04-19)
+│   │
+│   ├── audits/                        # Cross-cutting architectural audits
+│   │   └── System_Audit_And_Documentation_Update_Plan_April_2026.md
 │   │
 │   ├── research/                      # Research findings, evidence, open questions
 │   │   ├── research-method.md         # How we do research (template, evidence labels, rules)
 │   │   ├── open-questions.md          # Unresolved questions register
 │   │   └── topics/                    # One file per research topic
-│   │       ├── data-providers.md      # Data provider comparison and selection
-│   │       ├── backtesting-landscape.md # Framework comparison (VectorBT, Backtrader, etc.)
-│   │       ├── broker-api-options.md  # ib_insync alternatives, IBKR integration paths
-│   │       ├── cost-modeling.md       # Slippage, commission, market impact research
-│   │       └── regime-detection.md    # Approaches to market regime classification
+│   │       ├── data-landscape-review-april-2026.md  # Multi-source data landscape (written 2026-04-18)
+│   │       ├── sp-400-600-constituency-reconstruction.md  # ETF-holdings-based universe reconstruction (written 2026-04-19)
+│   │       ├── dataduo-product-scope.md         # Three-part DataDuo product definition (written 2026-04-19)
+│   │       ├── three-warehouse-validation-protocol.md  # Validation methodology (written 2026-04-19)
+│   │       ├── backtesting-landscape.md         # Framework comparison (deferred — Phase 1B context)
+│   │       ├── broker-api-options.md            # ib_insync alternatives (deferred — Phase 2A research)
+│   │       ├── cost-modeling.md                 # Slippage, commission research (deferred — Phase 1B research)
+│   │       └── regime-detection.md              # Regime classification approaches (deferred — Phase 4 research)
 │   │
 │   ├── roadmap.md                     # Build sequence, phase plan, current priorities
 │   │
@@ -170,15 +184,19 @@ honeyduo-wealth/
 
 **Contract inventory:**
 
-|Contract                   |Write when building   |Used by modules             |
-|---------------------------|----------------------|----------------------------|
-|strategy-contract.md       |M2 Strategy Factory   |M2, M4, M5, M8, M9, M11, M12|
-|scorecard-format.md        |M5 Metrics & Grading  |M5, M8, M9, M10, M11, M12   |
-|run-manifest-format.md     |M6 Experiment Tracking|M6, M4, M8, M9, M12         |
-|kill-record-format.md      |M10 Graveyard         |M10, M5, M6                 |
-|promotion-demotion-rules.md|M8 Tournament Arena   |M8, M9, M11, M12            |
-|alert-event-schema.md      |M13 Alerts            |M13, all event emitters     |
-|broker-abstraction.md      |M9 Paper Trading      |M9, M12                     |
+|Contract                       |Status        |Used by modules                                                |
+|-------------------------------|--------------|---------------------------------------------------------------|
+|price-source-adapter.md        |Written 2026-04-19|M1b, M1c, M1g, M1h, M1e                                    |
+|reconciliation-report-schema.md|Written 2026-04-19|M1h, M1e, M1 storage layer, DataDuo Comparative Truth Engine|
+|validation-protocol.md         |Written 2026-04-19|M4, M5, M9, M12, DataDuo Comparative Truth Engine          |
+|data-provenance-schema.md      |Written 2026-04-19|M1a, M1b, M1c, M1g, M1h, M1e, M6, DataDuo Enrichment API   |
+|strategy-contract.md           |Phase 1B      |M2, M4, M5, M8, M9, M11, M12                                   |
+|scorecard-format.md            |Phase 1C      |M5, M8, M9, M10, M11, M12                                      |
+|run-manifest-format.md         |Phase 1C      |M6, M4, M8, M9, M12                                            |
+|kill-record-format.md          |Phase 2B      |M10, M5, M6                                                    |
+|promotion-demotion-rules.md    |Phase 2A      |M8, M9, M11, M12                                               |
+|alert-event-schema.md          |Phase 3B      |M13, all event emitters                                        |
+|broker-abstraction.md          |Phase 2A      |M9, M12                                                        |
 
 -----
 
@@ -233,7 +251,7 @@ Date-stamped changes to this spec.
 **Does NOT contain:** Implementation details, specs, or ongoing status tracking.
 **When to write:** When a significant decision is made — technology choice, module boundary, contract design, build-vs-buy, major architectural change.
 **When to upload:** When working on anything related to the decision, or when someone (you or AI) is questioning why something was done a certain way.
-**Target size:** 300-800 words each. Brief and decisive.
+**Target size:** 300-800 words each. Brief and decisive. The 300-800 word target is typical for single-decision ADRs (technology pick, library choice, schema commitment). ADRs that formalize a broader architectural stance — multi-decision posture documents, two-deployment architectures, or audits-of-record — may run longer (ADR-003 is ~870 words and that is appropriate for its scope). Length is a tool for clarity, not an end in itself; an ADR that hits 1,200 words because it covers four interlocking decisions is fine, an ADR that hits 1,200 words because it didn't decide anything cleanly is not.
 
 **ADR template:**
 
@@ -262,17 +280,17 @@ What does this decision enable? What does it constrain?
 Under what conditions should we reconsider this decision?
 ```
 
-**Initial ADRs to create:**
+**ADR inventory (current):**
 
-|ADR    |Decision                                             |Write when      |
-|-------|-----------------------------------------------------|----------------|
-|ADR-001|VectorBT (open source) as backtest core              |Phase 1 kickoff |
-|ADR-002|ib_insync as provisional, broker abstraction required|Phase 1 kickoff |
-|ADR-003|MySQL on Honey Duo as primary data storage           |When building M1|
-|ADR-004|Python as sole language                              |Phase 1 kickoff |
-|ADR-005|Alpaca for tournament paper trading                  |When building M8|
+|ADR    |Decision                                                     |Status                |
+|-------|-------------------------------------------------------------|----------------------|
+|ADR-001|Storage Architecture (PostgreSQL + Parquet + DuckDB)         |Accepted 2026-04-09   |
+|ADR-002|Data Provider Stack (multi-source, redistributable enrichment)|Accepted 2026-04-09  |
+|ADR-003|Independent Public-Domain Pipeline Architecture (two-deployment, FRD-as-validator, multi-source adapter, lifecycle registry, capability domain coverage)|Accepted 2026-04-19|
 
-More will emerge during development. Any decision that a future session might question deserves an ADR.
+The originally aspirational ADRs (vectorbt-as-backtest-core, ib-insync-provisional, mysql-as-storage, python-as-sole-language, alpaca-for-paper) are not being written as separate ADRs. Their decisions are either absorbed (e.g., MySQL was superseded by ADR-001's storage architecture before a MySQL ADR was ever written; VectorBT is documented in the Blueprint Technology Stack rather than in its own ADR), documented in the Blueprint, or appropriately deferred to the phase that needs them (e.g., a broker-paper-trading-platform ADR may be written when M8 is built and Alpaca vs alternatives is actually evaluated).
+
+More ADRs will emerge during development. Any decision that a future session might question deserves an ADR.
 
 -----
 
@@ -480,29 +498,43 @@ This prevents research from becoming a pile of smart notes with no downstream ef
 
 ## What Gets Written Now vs. Later
 
-### Write now (before any code):
+### Written before any code (complete):
 
-- This document (done)
-- `blueprint.md` (done — v0.2.1)
-- `roadmap.md` (next — once we define the game plan)
-- `ADR-000-template.md` (the template itself)
+- This document (v1.2)
+- `blueprint.md` (v0.4)
+- `roadmap.md` (v1.1)
+- `ADR-000-template.md`
+- ADR-001 (Storage Architecture), ADR-002 (Data Provider Stack), ADR-003 (Independent Public-Domain Pipeline Architecture)
+- `contracts/price-source-adapter.md`, `reconciliation-report-schema.md`, `validation-protocol.md`, `data-provenance-schema.md`
+- `research/topics/data-landscape-review-april-2026.md`, `sp-400-600-constituency-reconstruction.md`, `dataduo-product-scope.md`, `three-warehouse-validation-protocol.md`
+- `audits/System_Audit_And_Documentation_Update_Plan_April_2026.md`
 - `research/research-method.md` (research rules and template)
-- `research/open-questions.md` (seed with questions from blueprint)
-- `research/topics/backtesting-landscape.md` (capture findings from this session)
-- Repo structure (create the folder skeleton)
+- `research/open-questions.md` (open questions register)
+- Repo structure (folder skeleton)
 
-### Write when building Phase 1:
+### Write when building Phase 1A:
 
-- `modules/m01-data-layer.md`
+- `modules/m01-data-layer.md` (M1 overview spec — write at A1 start)
+- `modules/m01d-universe-manager.md` (A1 deliverable)
+- `modules/m01f-lifecycle-registry.md` (A1 deliverable)
+- `modules/m01g-price-source-adapters.md` (A2 deliverable)
+- `modules/m01h-reconciliation-engine.md` (A3 deliverable)
+
+### Write when building Phase 1B:
+
 - `modules/m02-strategy-factory.md`
 - `modules/m03-feature-registry.md`
 - `modules/m04-backtest-engine.md`
+- `contracts/strategy-contract.md`
+- `research/topics/backtesting-landscape.md` (formalize from existing notes)
+- `research/topics/cost-modeling.md`
+
+### Write when building Phase 1C:
+
 - `modules/m05-metrics-grading.md`
 - `modules/m06-experiment-tracking.md`
-- `contracts/strategy-contract.md`
 - `contracts/scorecard-format.md`
 - `contracts/run-manifest-format.md`
-- ADRs 001-004
 
 ### Write when building Phase 2:
 
@@ -532,7 +564,8 @@ This prevents research from becoming a pile of smart notes with no downstream ef
 
 -----
 
-*Document version: 1.1*
+*Document version: 1.2*
 *Created: April 2026*
 *Status: Active — defines documentation and research structure for the project*
 *Changelog v1.1: Added canonical source rules, doc update triggers, naming/versioning conventions, session guides as committed assets. Added research layer: research-method.md, open-questions.md, topic files, evidence labels, research-to-decision rule. Added research workflow to How This Works in Practice. Added research anti-patterns.*
+*Changelog v1.2: Replaced aspirational ADR inventory table with the three actual ADRs (001 Storage Architecture, 002 Data Provider Stack, 003 Independent Public-Domain Pipeline Architecture); aspirational vectorbt/ib-insync/mysql/python/alpaca ADRs absorbed elsewhere or deferred to phase-of-relevance and not recreated. Added four new contracts to contract inventory: price-source-adapter, reconciliation-report-schema, validation-protocol, data-provenance-schema (all written 2026-04-19). Added M1 sub-module specs (m01d, m01f, m01g, m01h) as Phase 1A-A1/A2/A3 deliverables to the modules inventory. Updated repo structure section to show real ADR filenames, real research topic filenames, and the audits/ directory. Refined ADR sizing guidance — 300-800 words is typical for single-decision ADRs; ADRs formalizing architectural stances may run longer (e.g., ADR-003 at ~870 words). Clarified ADR immutability rule — bodies are immutable after their authoring audit cycle completes; in-cycle wording refinements are part of producing the ADR, not amending it. Replaced the "Write when building Phase 1" combined section with phase-specific lists (Phase 1A, Phase 1B, Phase 1C) reflecting current sequencing and added a "Written before any code (complete)" section enumerating Phase 0 deliverables. Implements `audits/System_Audit_And_Documentation_Update_Plan_April_2026.md` Part 3 §Documentation & Knowledge Architecture Plan.*

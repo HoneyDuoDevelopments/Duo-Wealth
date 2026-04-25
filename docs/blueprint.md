@@ -1,4 +1,4 @@
-# HoneyDuo Wealth — Strategy Incubator Blueprint v0.2
+# HoneyDuo Wealth — Strategy Incubator Blueprint v0.4
 
 ## What This Document Is
 
@@ -11,6 +11,8 @@ Every module listed here belongs in the system. Modules are tagged with an archi
 ## System Purpose
 
 A modular, strategy-agnostic workbench for building, testing, validating, and deploying algorithmic trading strategies. This is not a trading bot — it is the operating system that produces, evaluates, manages, and retires trading bots.
+
+The system produces both an internal trading platform and a public data service from a shared pipeline. The pipeline is the system: one codebase ingests, enriches, and serves data across a defined set of capability domains, and runs in two deployments. **Duo Wealth** is the local deployment that supports personal trading research and execution, supplemented by personally-licensed FRD (historical) and IBKR (forward) feeds. **DataDuo** is the cloud VPS deployment that runs the same pipeline codebase from public-domain sources only and serves a three-part public product: (1) an Enrichment API covering universe membership history, corporate actions, fundamentals, short interest, holdings, insider data, calendar, macro, and lifecycle registry; (2) a "Build-Your-Own-Warehouse" methodology teaching retail users how to construct a backtest-ready warehouse from free price sources enriched by DataDuo outputs; (3) a Comparative Truth Engine publishing measured accuracy deltas between free-data-plus-DataDuo-enrichment and FRD-assisted reference warehouses. DataDuo never serves prices. FRD is a validator for both deployments, not a primary source for either. See ADR-003 for the architectural rationale.
 
 Designed to be a long-horizon tool: extensible, auditable, reproducible, and structured for AI-assisted development across many sessions with minimal context reload.
 
@@ -44,6 +46,9 @@ The system must be able to run the full cycle — data → define → backtest �
 **8. Portfolio construction rewards simplicity.**
 Equal risk weights are surprisingly hard to beat. Start with volatility-normalized equal weighting and handcrafting (Carver’s method) before implementing optimization. Mean-variance optimization is notoriously unstable. Half-Kelly or quarter-Kelly as a leverage ceiling, never as a precise allocation tool. Sophisticated portfolio optimization is a Phase 4 concern.
 
+**9. Pipeline is bootstrap-once, maintain-forever.**
+Every data source the pipeline depends on must publish continuously on a predictable schedule without human intervention. This is what makes the two-deployment architecture viable long-term — forward maintenance after historical bootstrap is automated ingestion of already-scheduled public releases. Any source that requires manual intervention to keep updated is rejected or demoted to validation-only role.
+
 -----
 
 ## Architectural Tiers
@@ -68,9 +73,20 @@ STRATEGY INCUBATOR
 │   │   ├── M1b  Canonical Store (normalized, unified schema)
 │   │   ├── M1c  Research Store (adjusted, validated, universe-filtered)
 │   │   ├── M1d  Universe Manager (instrument lists, filters, membership rules)
-│   │   └── M1e  Data Quality Validator (gap detection, outlier flagging, stale data,
-│   │            volume anomalies, cross-source comparison, corporate action verification,
-│   │            alerts on any anomaly before data reaches downstream modules)
+│   │   ├── M1e  Data Quality Validator (gap detection, outlier flagging, stale data,
+│   │   │        volume anomalies, cross-source comparison, corporate action verification,
+│   │   │        alerts on any anomaly before data reaches downstream modules)
+│   │   ├── M1f  Instrument Lifecycle Registry (listing/delisting dates, reasons,
+│   │   │        ticker reuse handling, corporate identity continuity, point-in-time
+│   │   │        universe membership queries, sourced from SEC Form 25, 8-K Item 3.01,
+│   │   │        OpenFIGI, EDGAR CIK history, historical ETF holdings snapshots)
+│   │   ├── M1g  Price Source Adapter Layer (pluggable adapters for Stooq, yfinance,
+│   │   │        IBKR, FRD, user-provided CSV; normalize to canonical schema with
+│   │   │        data provenance metadata; pipeline enrichment is adapter-agnostic)
+│   │   └── M1h  Data Reconciliation Engine (cross-source comparison across price,
+│   │            corporate actions, universe membership; confidence scoring per
+│   │            source per domain; discrepancy tracking and resolution logic;
+│   │            feeds into Data Quality Validator for downstream gating)
 │   │
 │   ├── M2  Strategy Factory
 │   │   ├── M2a  Strategy Contract (interface definition all strategies must follow)
@@ -183,26 +199,39 @@ STRATEGY INCUBATOR
 **Tier:** 1 — Foundation
 **What it does:** Ingests, normalizes, stores, validates, and serves all market data. Single source of truth for the entire system.
 
+**M1 is a dual-deployment data pipeline.** The same codebase runs in two configurations: Duo Wealth (local, supplemented by personally-licensed FRD and IBKR feeds) and DataDuo (cloud, public-domain sources only). FRD serves as validation benchmark for both deployments; it is not the authoritative source for either. Bootstrap-once, maintain-forever (Principle 9) governs M1's source selection — every ingested source must publish continuously on a predictable schedule without human intervention, or it is demoted to validation-only role. See ADR-003 for the architectural rationale.
+
+**Source-agnostic by construction.** The pipeline ingests price data from multiple sources through a unified adapter interface. No source is authoritative; the pipeline's own corporate action and universe logic produces the research-tier output. FRD, when present, serves as validation benchmark for pipeline accuracy — ingested as one adapter among several, never treated as ground truth. The adapter interface is specified in `contracts/price-source-adapter.md`.
+
 **Internal structure (logical tiers — can be one system with stage tags initially):**
 
-- **Raw store:** Original vendor payloads, immutable, timestamped, provider-tagged. Never modified after ingestion. Enables auditability and vendor switching.
-- **Canonical store:** Unified schema across all providers. Timestamps normalized, fields standardized. This is what modules query against.
-- **Research store:** Adjusted for splits/dividends, validated, filtered by universe rules, corporate actions resolved. This is what backtests actually run on.
+- **Raw store (M1a):** Original vendor payloads, immutable, timestamped, source-tagged. Never modified after ingestion. Enables auditability and source switching.
+- **Canonical store (M1b):** Unified schema across all adapters. Timestamps normalized, fields standardized, source adjustment state reversed to unadjusted raw per the unadjust-then-re-adjust principle. This is what downstream modules query against.
+- **Research store (M1c):** Pipeline-applied adjustment factors (derived from EDGAR 8-K Item 5.03 parsing), validation passed, filtered by universe rules. This is what backtests actually run on.
+- **Universe Manager (M1d):** Instrument lists, filters, membership rules. For indices tracked by an SEC-registered ETF, index membership is natively reconstructed from the ETF's N-PORT holdings history (MDY for S&P 400, IJR for S&P 600). For S&P 500, community-maintained sources (fja05680, datasets/s-and-p-500-companies) serve the same role. ETF-holdings-based universe reconstruction is the pipeline's native method for index membership tracking where an SEC-registered ETF exists, not a workaround.
+- **Data Quality Validator (M1e):** Gap detection, outlier flagging, stale data, volume anomalies, corporate action verification. Consumes reconciliation output from M1h as one validation input and applies gating rules before downstream publishing.
+- **Instrument Lifecycle Registry (M1f):** Active registry of listing, delisting, ticker reuse, corporate identity continuity. Sourced from SEC Form 25, 8-K Item 3.01, OpenFIGI, EDGAR CIK history, historical ETF holdings snapshots. Point-in-time universe queries return instruments active on the queried date, not currently active. Built before any price ingestion per the universe-and-lifecycle-first principle.
+- **Price Source Adapter Layer (M1g):** Pluggable adapters (Stooq, yfinance, IBKR, FRD, user-provided CSV) normalize source output to the canonical price record with provenance metadata. Every adapter implements mandatory reverse-adjustment — passthrough of source-provided adjusted prices is a contract violation. Deployment eligibility is enforced at adapter registration; DataDuo refuses to register `ibkr` or `frd` adapters at startup.
+- **Data Reconciliation Engine (M1h):** Cross-source comparison across price, corporate actions, and universe membership. Produces discrepancy records per `contracts/reconciliation-report-schema.md` with confidence scoring per source per domain. Reconciliation output feeds the Data Quality Validator (M1e) for downstream gating and is the evidentiary basis for DataDuo's Comparative Truth Engine deliverable.
 
-**Responsibilities:**
+**Responsibilities (capability domains the pipeline covers):**
 
-- Ingest OHLCV from multiple providers
-- Handle corporate actions (splits, dividends, delistings, mergers, spinoffs)
-- Data quality validation — flag gaps, bad ticks, stale data, suspiciously perfect data
-- Support multiple timeframes (daily, hourly, minute — as needed)
-- Universe management — define, maintain, and version lists of tradeable instruments
-- Provider abstraction — switching from Yahoo Finance to Polygon shouldn’t require rewriting strategies
-- Data snapshot versioning — tie every backtest run to an exact data state
+- Universe membership and index membership history (S&P 500, S&P 400, with ETFs as first-class instruments)
+- Track instrument lifecycle — listing, delisting, ticker reuse, corporate identity continuity — as an active registry with point-in-time query support
+- Corporate actions — splits, dividends, mergers, spinoffs, adjustment factor derivation from EDGAR 8-K Item 5.03
+- Multi-source price ingestion via adapter pattern — pipeline enrichment logic operates identically against any normalized price source
+- Fundamentals, short interest (FINRA), ETF/fund holdings (N-PORT), institutional holdings (13F), insider activity (Forms 3/4/5)
+- Trading calendar (pandas_market_calendars) — canonical session timestamps, holiday handling
+- Macro — primary ingestion from Treasury Fiscal Data, BLS, and BEA for both deployments; FRED/ALFRED serves as reconciliation cross-check (same ingestion for both deployments, used to validate primary source accuracy). Neither deployment treats FRED as authoritative.
+- Sector classification, identifiers (FIGI-derived)
+- Data quality validation — gap detection, outlier flagging, cross-source reconciliation, corporate action verification
+- Maintain data provenance metadata for every value — source identity, ingestion timestamp, adjustment state received, transformations applied by pipeline, confidence score — per `contracts/data-provenance-schema.md`
+- Data snapshot versioning — tie every backtest run to an exact data state via provenance lineage
 
-**Depends on:** External providers (Yahoo Finance free tier, Alpaca free tier, IBKR market data, potentially Polygon/Tiingo if budget allows)
+**Depends on:** Public-domain sources (SEC EDGAR including Form 25 and 8-K, OpenFIGI, N-PORT filings, fja05680, datasets/s-and-p-500-companies, Stooq, yfinance, FINRA, Treasury Fiscal Data, BLS, BEA, FRED/ALFRED, pandas_market_calendars); personal-license sources for Duo Wealth only (FRD historical, IBKR forward)
 **Feeds into:** Every other module
-**Tech:** Python, MySQL (existing Honey Duo infra), pandas for in-memory ops
-**Key risk:** Silent data corruption. A bad split adjustment or missing dividend will make backtests lie. Validation checks are not optional.
+**Tech:** Python; PostgreSQL 16 + Parquet + DuckDB per ADR-001; pandas for in-memory ops
+**Key risk:** Adapter reverse-adjustment logic is the highest-risk component — getting it wrong silently corrupts every downstream value. Mitigated by three-warehouse cross-validation per `contracts/validation-protocol.md`, FRD native output as Warehouse C reference, and per-adapter unit tests on known corporate action sequences.
 
 -----
 
@@ -591,6 +620,26 @@ These are NOT modules — they are shared specifications that multiple modules d
 **Used by:** M9, M12
 **Defines:** Internal interface for broker interaction. Decouples system from specific broker API/library (insulates from ib_insync archival risk).
 
+### Price Source Adapter
+
+**Used by:** M1b, M1c, M1g, M1h, M1e
+**Defines:** The interface every price source adapter must implement — `ingest`, mandatory `reverse_adjust`, `describe_capabilities`; canonical output record schema; deployment eligibility enforcement (DataDuo refuses `ibkr` / `frd` adapters); error handling. Specified in `contracts/price-source-adapter.md`.
+
+### Reconciliation Report Schema
+
+**Used by:** M1h, M1e, M1 storage layer, DataDuo Comparative Truth Engine
+**Defines:** Discrepancy record format produced by the Data Reconciliation Engine — domain, sources compared, delta type, severity scoring, resolution states. Specified in `contracts/reconciliation-report-schema.md`.
+
+### Validation Protocol
+
+**Used by:** M4, M5, M9, M12, DataDuo Comparative Truth Engine
+**Defines:** Three-warehouse validation methodology (Warehouse A public-domain, Warehouse B Duo Wealth premium, Warehouse C FRD-only), reference strategy suite, scorecard comparison rules, empirical tolerance threshold framework, promotion gates. Specified in `contracts/validation-protocol.md`.
+
+### Data Provenance Schema
+
+**Used by:** M1a, M1b, M1c, M1g, M1h, M1e, M6, DataDuo Enrichment API
+**Defines:** Provenance metadata format attached to every value the pipeline produces — source identity, adapter version, ingestion timestamp, source adjustment state, reversal applied, transformations list, confidence score, deployment. Mandatory on every pipeline value. Specified in `contracts/data-provenance-schema.md`.
+
 ### Architecture Decision Records (ADRs)
 
 **Used by:** All modules, all future development sessions
@@ -662,32 +711,32 @@ These are NOT modules — they are shared specifications that multiple modules d
 
 ## Technology Stack
 
-|Component              |Technology                |Status        |Notes                                          |
-|-----------------------|--------------------------|--------------|-----------------------------------------------|
-|Language               |Python 3.x                |Confirmed     |Primary for everything                         |
-|Backtest Core          |VectorBT open source      |Start here    |Upgrade to Pro ($500 lifetime) if justified    |
-|Data Storage           |MySQL                     |Existing      |Running on Honey Duo workstation               |
-|Broker — Live          |IBKR TWS API              |Confirmed     |Abstract behind internal interface             |
-|Broker Lib             |ib_insync                 |PROVISIONAL   |Archived March 2024 — plan for replacement     |
-|Broker — Paper Alt     |Alpaca API                |Free tier     |Good for tournament, IEX data limitation noted |
-|Performance Metrics    |pyfolio / QuantStats      |Helper only   |Use for calculations, keep scoring logic custom|
-|Monte Carlo            |Custom (NumPy/SciPy)      |Build         |Drawdown distribution simulation               |
-|Visualization          |Plotly / VectorBT built-in|Use           |Interactive charts, dashboards                 |
-|Notifications          |Python (Teams/Telegram)   |Pattern exists|Reuse MIC3 PM dispatch pattern                 |
-|Version Control        |Git / GitHub              |Existing      |Strategy + feature + code versioning           |
-|Scheduling             |cron / systemd            |Existing      |Already used on Honey Duo                      |
-|Heavy Compute          |RTX 3090 workstation      |Existing      |Parameter sweeps, Monte Carlo                  |
-|Light Compute / Monitor|Raspberry Pi 5            |Existing      |Monitoring, alerts, lightweight tasks          |
+|Component                   |Technology                      |Status        |Notes                                                                                                                         |
+|----------------------------|--------------------------------|--------------|------------------------------------------------------------------------------------------------------------------------------|
+|Language                    |Python 3.x                      |Confirmed     |Primary for everything                                                                                                        |
+|Backtest Core               |VectorBT open source            |Start here    |Upgrade to Pro ($500 lifetime) if justified                                                                                   |
+|Data Storage                |PostgreSQL 16 + Parquet + DuckDB|Confirmed     |Per ADR-001 — tiered storage for raw / canonical / research                                                                   |
+|Price sources (multi-source)|Adapter-based ingestion         |Per ADR-003   |Stooq, yfinance, IBKR, FRD, user-provided CSV via `contracts/price-source-adapter.md`; pipeline enrichment is source-agnostic |
+|Trading calendar            |pandas_market_calendars         |Confirmed     |Canonical session timestamps, holiday handling                                                                                |
+|Broker — Live               |IBKR TWS API                    |Confirmed     |Abstract behind internal interface                                                                                            |
+|Broker Lib                  |ib_insync                       |PROVISIONAL   |Archived March 2024 — plan for replacement                                                                                    |
+|Broker — Paper Alt          |Alpaca API                      |Free tier     |Good for tournament, IEX data limitation noted                                                                                |
+|Performance Metrics         |pyfolio / QuantStats            |Helper only   |Use for calculations, keep scoring logic custom                                                                               |
+|Monte Carlo                 |Custom (NumPy/SciPy)            |Build         |Drawdown distribution simulation                                                                                              |
+|Visualization               |Plotly / VectorBT built-in      |Use           |Interactive charts, dashboards                                                                                                |
+|Notifications               |Python (Teams/Telegram)         |Pattern exists|Reuse MIC3 PM dispatch pattern                                                                                                |
+|Version Control             |Git / GitHub                    |Existing      |Strategy + feature + code versioning                                                                                          |
+|Scheduling                  |cron / systemd                  |Existing      |Already used on Honey Duo                                                                                                     |
+|Heavy Compute               |RTX 3090 workstation            |Existing      |Parameter sweeps, Monte Carlo                                                                                                 |
+|Light Compute / Monitor     |Raspberry Pi 5                  |Existing      |Monitoring, alerts, lightweight tasks                                                                                         |
 
 -----
 
 ## Open Questions
 
-1. **Data provider selection and budget** — Yahoo Finance (free, daily EOD), Alpaca (free, minute bars), or paid (Polygon ~$30/mo, Tiingo)? What resolution do we actually need for v1 strategies?
 1. **ib_insync replacement path** — evaluate ib_async, nautilus_trader IBKR adapter, or direct TWS API wrapper at build time. Define broker abstraction interface early so this swap is painless.
 1. **Tournament duration thresholds** — needs real data to calibrate. Start with 4-8 week minimum, adjust based on observed strategy cycle times.
 1. **Circuit breaker multipliers** — 1.5x or 2x backtest P95 drawdown? Start conservative (1.5x), loosen if it causes too many false triggers.
-1. **Asset class scope for v1** — US equities and ETFs only? Or include options/futures from the start? Recommend constraining to equities/ETFs initially.
 1. **Compute profiling** — will RTX 3090 handle full universe parameter sweeps? Profile early.
 1. **Alpaca IEX data limitation** — paper tournament uses IEX feed, backtests may use broader data. Account for this discrepancy in tournament evaluation.
 1. **VectorBT open source vs Pro** — start open source. Evaluate Pro when specific bottleneck appears. $500 lifetime is low risk if justified.
@@ -723,9 +772,10 @@ CROSS-CUTTING (define alongside, not after):
 
 -----
 
-*Document version: 0.3*
+*Document version: 0.4*
 *Created: April 2026*
 *Status: End-state system definition — architecturally complete, field-validated, implementation phased*
 *Changelog v0.2: Added Portfolio & Risk Engine (M11), Feature Registry (M3), Experiment Tracking (M6), Research Governance (M7), Adaptive Allocation (M15). Restructured Data Layer into logical tiers. Added structured strategy metadata. Added cross-cutting contracts. Flagged ib_insync as provisional. Revised backtest gate criteria to use evidence thresholds instead of fixed trade count. Added architectural tier classifications.*
 *Changelog v0.2.1: Clarified Promotion/Demotion Rules ownership model (M5 calculates, contract defines rules, stage modules apply). Tightened M11/M15 boundary (M11 = always-on risk control, M15 = optional intelligence that suggests to M11, M11 has final authority). Added Architecture Decision Records (ADRs) as cross-cutting contract for preserving design rationale across sessions.*
-*Changelog v0.3: Added Architectural Principles section — eight non-negotiable design constraints validated by field research across LEAN, NautilusTrader, QSTrader, pysystemtrade, and practitioner accounts. Key additions: backtest-to-live code parity as mandatory constraint, modular monolith over microservices, data quality validation as first-class concern, conservative cost modeling defaults, system health monitoring scope expansion, regime simplicity principle, core loop before intelligence layer, portfolio simplicity principle.*I
+*Changelog v0.3: Added Architectural Principles section — eight non-negotiable design constraints validated by field research across LEAN, NautilusTrader, QSTrader, pysystemtrade, and practitioner accounts. Key additions: backtest-to-live code parity as mandatory constraint, modular monolith over microservices, data quality validation as first-class concern, conservative cost modeling defaults, system health monitoring scope expansion, regime simplicity principle, core loop before intelligence layer, portfolio simplicity principle.*
+*Changelog v0.4: Extended System Purpose with two-deployment pipeline architecture (Duo Wealth + DataDuo) and three-part DataDuo product (Enrichment API, Build-Your-Own-Warehouse methodology, Comparative Truth Engine). Added Principle 9 (Pipeline is bootstrap-once, maintain-forever). Added M1f (Instrument Lifecycle Registry), M1g (Price Source Adapter Layer), M1h (Data Reconciliation Engine) to system tree. Rewrote M1 Module Detail for source-agnostic ingestion, FRD-as-validator, ETF-holdings universe reconstruction as native pipeline method, macro source architecture (Treasury/BLS/BEA primary, FRED/ALFRED reconciliation), and mandatory data provenance. Added four cross-cutting contracts (price-source-adapter, reconciliation-report-schema, validation-protocol, data-provenance-schema). Updated Technology Stack to PostgreSQL 16 + Parquet + DuckDB (ADR-001), added multi-source price adapters and pandas_market_calendars. Removed settled Open Questions (data provider selection, asset class scope for v1). Corrected heading to match footer version. Implements docs/audits/System_Audit_And_Documentation_Update_Plan_April_2026.md.*
