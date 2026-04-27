@@ -108,9 +108,20 @@ Why sub-phases within tiers: each sub-phase has clear exit criteria and delivers
   - S&P 500 from fja05680 + datasets/s-and-p-500-companies (community-maintained sources)
   - S&P 400 from MDY N-PORT historical holdings (ETF-as-universe-proxy)
   - S&P 600 from IJR N-PORT historical holdings
+  - **Build sequence (sequential, not parallel):**
+    - S&P 500 first via fja05680 + datasets/s-and-p-500-companies + press release reconciliation — proves the architecture before extending
+    - MDY/IJR after S&P 500 work proves the architecture — extends universe coverage via N-PORT parsing, reusing the corporate action event log and adjustment engines built during S&P 500 work
+    - Phase 1A-A1 does not exit until S&P 500 and MDY/IJR coverage are both in place
+    - Rationale: splits and dividends are instrument-keyed not index-keyed, so the heavy infrastructure (event log, adjustment engines) carries forward; only membership reconstruction logic is index-specific. See `research/topics/phase-1-build-plan.md` Section 1.6.
 - Cross-reconcile across sources; flag gaps and conflicts
 - Build point-in-time universe query interface (returns instruments active on queried date, not currently active)
 - Write `modules/m01d-universe-manager.md` covering M1d's public-domain universe reconstruction
+- Empirical source verification gate (before Stage 1 implementation begins)
+  - Verify what Stooq actually delivers for known test cases (AAPL, a delisted ticker, a high-dividend-history name, a dual-class share)
+  - Verify what yfinance actually delivers for the same test cases — confirm adjusted and unadjusted exposed as expected, measure delisted-ticker coverage
+  - Verify SEC and OpenFIGI API behavior for identity-resolution hard cases
+  - Document results in `research/topics/source-empirical-verification-stooq-yfinance.md`
+  - Stage 1 implementation does not begin until empirical verification is complete and documented
 
 **Exit criteria:**
 
@@ -683,6 +694,7 @@ Items that are valuable but not assigned to a phase yet:
 |2026-04-18|Data landscape review v2 + S&P 400/600 deep research|Multi-source landscape mapped; ETF-holdings reconstruction (MDY/IJR via N-PORT) confirmed for S&P 400/600 universe history|
 |2026-04-19|Architectural audit                 |Two-deployment pipeline, three-warehouse validation, lifecycle registry, multi-source adapter pattern locked. ADR-003 accepted. Stage 1 deliverables (ADR-003 + 4 contracts + 4 research topics) committed.|
 |2026-04-24|Blueprint v0.4 + roadmap v1.1 + knowledge architecture plan v1.2|Stage 2-4 of audit execution: governing documents updated to reflect locked architecture; warehouse framing refined to distinguish persistent / permanent / temporary lifetimes and FRD's bootstrap-vs-comparison roles|
+|2026-04-25|Phase 1 build plan locked|Eleven-stage sequence committed to `research/topics/phase-1-build-plan.md`. Multi-source-from-the-start correction applied (vs single-ticker validation in audit's A2). 2005 coverage start locked. MDY/IJR sequenced after S&P 500 within Phase 1A-A1. Empirical source verification gate added before Stage 1 implementation. Stooq adjustment-state finding (fully adjusted, no separate raw series) drove reverse-adjustment-engine-before-price-ingestion sequencing.|
 
 -----
 
