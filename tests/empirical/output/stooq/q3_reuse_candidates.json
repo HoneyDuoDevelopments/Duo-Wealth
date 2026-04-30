@@ -1,0 +1,922 @@
+[
+  {
+    "ticker": "SCNI",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/scni.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20150512,
+    "last_date": 20260428,
+    "max_jump_pct": 97.3,
+    "max_jump_date": 20211222,
+    "row_count": 2673
+  },
+  {
+    "ticker": "ZJK",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/zjk.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20240930,
+    "last_date": 20260428,
+    "max_jump_pct": 172.2,
+    "max_jump_date": 20241203,
+    "row_count": 394
+  },
+  {
+    "ticker": "KWMWW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/kwmww.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20250515,
+    "last_date": 20260423,
+    "max_jump_pct": 349.4,
+    "max_jump_date": 20250604,
+    "row_count": 204
+  },
+  {
+    "ticker": "LIVE",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/live.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 286.2,
+    "max_jump_date": 20111213,
+    "row_count": 5090
+  },
+  {
+    "ticker": "FFAIW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/ffaiw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20200831,
+    "last_date": 20260428,
+    "max_jump_pct": 156.0,
+    "max_jump_date": 20241230,
+    "row_count": 1416
+  },
+  {
+    "ticker": "QNTM",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/qntm.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20200110,
+    "last_date": 20260428,
+    "max_jump_pct": 138.4,
+    "max_jump_date": 20200603,
+    "row_count": 1582
+  },
+  {
+    "ticker": "LNZAW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/lnzaw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210929,
+    "last_date": 20260428,
+    "max_jump_pct": 107.8,
+    "max_jump_date": 20250724,
+    "row_count": 1025
+  },
+  {
+    "ticker": "AMTX",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/amtx.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20080609,
+    "last_date": 20260428,
+    "max_jump_pct": 118.8,
+    "max_jump_date": 20180316,
+    "row_count": 4333
+  },
+  {
+    "ticker": "SNOA",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/snoa.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20070124,
+    "last_date": 20260428,
+    "max_jump_pct": 241.7,
+    "max_jump_date": 20090527,
+    "row_count": 4837
+  },
+  {
+    "ticker": "CLPS",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/clps.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20180524,
+    "last_date": 20260428,
+    "max_jump_pct": 121.2,
+    "max_jump_date": 20210217,
+    "row_count": 1984
+  },
+  {
+    "ticker": "GDC",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/gdc.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20151229,
+    "last_date": 20260428,
+    "max_jump_pct": 1140.0,
+    "max_jump_date": 20230501,
+    "row_count": 1995
+  },
+  {
+    "ticker": "VS",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/vs.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210119,
+    "last_date": 20260428,
+    "max_jump_pct": 243.5,
+    "max_jump_date": 20241016,
+    "row_count": 1325
+  },
+  {
+    "ticker": "DWSN",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/dwsn.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 111.7,
+    "max_jump_date": 20250616,
+    "row_count": 5294
+  },
+  {
+    "ticker": "DRUG",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/drug.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20211109,
+    "last_date": 20260428,
+    "max_jump_pct": 1445.8,
+    "max_jump_date": 20241015,
+    "row_count": 1119
+  },
+  {
+    "ticker": "TARA",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/tara.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20141022,
+    "last_date": 20260428,
+    "max_jump_pct": 85.6,
+    "max_jump_date": 20190328,
+    "row_count": 2894
+  },
+  {
+    "ticker": "MIRM",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/mirm.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20190718,
+    "last_date": 20260428,
+    "max_jump_pct": 111.0,
+    "max_jump_date": 20191216,
+    "row_count": 1704
+  },
+  {
+    "ticker": "LASE",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/lase.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20220930,
+    "last_date": 20260428,
+    "max_jump_pct": 83.6,
+    "max_jump_date": 20241008,
+    "row_count": 896
+  },
+  {
+    "ticker": "ELTK",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/eltk.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 326.8,
+    "max_jump_date": 20190529,
+    "row_count": 5092
+  },
+  {
+    "ticker": "UFG",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/ufg.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20250114,
+    "last_date": 20260428,
+    "max_jump_pct": 87.6,
+    "max_jump_date": 20260105,
+    "row_count": 322
+  },
+  {
+    "ticker": "MITK",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/mitk.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 19950526,
+    "last_date": 20260428,
+    "max_jump_pct": 218.8,
+    "max_jump_date": 20080710,
+    "row_count": 7723
+  },
+  {
+    "ticker": "OIOWW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/oioww.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20230807,
+    "last_date": 20260424,
+    "max_jump_pct": 400.0,
+    "max_jump_date": 20231128,
+    "row_count": 396
+  },
+  {
+    "ticker": "GCTK",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/gctk.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20211213,
+    "last_date": 20260428,
+    "max_jump_pct": 238.3,
+    "max_jump_date": 20230406,
+    "row_count": 1027
+  },
+  {
+    "ticker": "TXMD",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/txmd.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20070919,
+    "last_date": 20260428,
+    "max_jump_pct": 372.0,
+    "max_jump_date": 20090929,
+    "row_count": 3720
+  },
+  {
+    "ticker": "TC",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/tc.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20181120,
+    "last_date": 20260428,
+    "max_jump_pct": 98.4,
+    "max_jump_date": 20201022,
+    "row_count": 1851
+  },
+  {
+    "ticker": "SLGB",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/slgb.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20251015,
+    "last_date": 20260428,
+    "max_jump_pct": 103.3,
+    "max_jump_date": 20260126,
+    "row_count": 134
+  },
+  {
+    "ticker": "XLO",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/xlo.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20211022,
+    "last_date": 20260428,
+    "max_jump_pct": 125.3,
+    "max_jump_date": 20250212,
+    "row_count": 1132
+  },
+  {
+    "ticker": "RENT",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/rent.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20211027,
+    "last_date": 20260428,
+    "max_jump_pct": 161.9,
+    "max_jump_date": 20240411,
+    "row_count": 1129
+  },
+  {
+    "ticker": "ONMDW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/onmdw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210625,
+    "last_date": 20260427,
+    "max_jump_pct": 151.8,
+    "max_jump_date": 20251006,
+    "row_count": 842
+  },
+  {
+    "ticker": "GV",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/gv.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20220517,
+    "last_date": 20260428,
+    "max_jump_pct": 186.4,
+    "max_jump_date": 20250305,
+    "row_count": 988
+  },
+  {
+    "ticker": "ATOS",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/atos.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20121108,
+    "last_date": 20260428,
+    "max_jump_pct": 368.2,
+    "max_jump_date": 20190314,
+    "row_count": 3384
+  },
+  {
+    "ticker": "WBTN",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/wbtn.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20240627,
+    "last_date": 20260428,
+    "max_jump_pct": 81.2,
+    "max_jump_date": 20250813,
+    "row_count": 460
+  },
+  {
+    "ticker": "VIVK",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/vivk.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20220214,
+    "last_date": 20260428,
+    "max_jump_pct": 113.5,
+    "max_jump_date": 20220427,
+    "row_count": 1053
+  },
+  {
+    "ticker": "TRIB",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/trib.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 89.1,
+    "max_jump_date": 20250814,
+    "row_count": 5325
+  },
+  {
+    "ticker": "AIFF",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/aiff.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20211129,
+    "last_date": 20260428,
+    "max_jump_pct": 171.0,
+    "max_jump_date": 20250211,
+    "row_count": 1107
+  },
+  {
+    "ticker": "LTRYW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/ltryw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20180614,
+    "last_date": 20260428,
+    "max_jump_pct": 279.4,
+    "max_jump_date": 20201119,
+    "row_count": 1750
+  },
+  {
+    "ticker": "SLNHP",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/slnhp.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210823,
+    "last_date": 20260428,
+    "max_jump_pct": 90.0,
+    "max_jump_date": 20221221,
+    "row_count": 1128
+  },
+  {
+    "ticker": "GWAV",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/gwav.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20220725,
+    "last_date": 20260428,
+    "max_jump_pct": 147.7,
+    "max_jump_date": 20240516,
+    "row_count": 944
+  },
+  {
+    "ticker": "RNWWW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/rnwww.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210825,
+    "last_date": 20260428,
+    "max_jump_pct": 240.8,
+    "max_jump_date": 20251028,
+    "row_count": 1019
+  },
+  {
+    "ticker": "EYPT",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/eypt.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 177.5,
+    "max_jump_date": 20231204,
+    "row_count": 5286
+  },
+  {
+    "ticker": "INLF",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/inlf.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20250102,
+    "last_date": 20260428,
+    "max_jump_pct": 286.3,
+    "max_jump_date": 20260130,
+    "row_count": 330
+  },
+  {
+    "ticker": "BGMSP",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/bgmsp.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20121231,
+    "last_date": 20260427,
+    "max_jump_pct": 166.7,
+    "max_jump_date": 20260407,
+    "row_count": 1370
+  },
+  {
+    "ticker": "SAFX",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/safx.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20250610,
+    "last_date": 20260428,
+    "max_jump_pct": 108.3,
+    "max_jump_date": 20260127,
+    "row_count": 222
+  },
+  {
+    "ticker": "HTOO",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/htoo.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20201211,
+    "last_date": 20260428,
+    "max_jump_pct": 90.0,
+    "max_jump_date": 20240216,
+    "row_count": 1349
+  },
+  {
+    "ticker": "SFWL",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/sfwl.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20230331,
+    "last_date": 20260428,
+    "max_jump_pct": 101.8,
+    "max_jump_date": 20230509,
+    "row_count": 763
+  },
+  {
+    "ticker": "MIRA",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/mira.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20230803,
+    "last_date": 20260428,
+    "max_jump_pct": 627.4,
+    "max_jump_date": 20240722,
+    "row_count": 686
+  },
+  {
+    "ticker": "ELTX",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/eltx.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210205,
+    "last_date": 20260428,
+    "max_jump_pct": 81.5,
+    "max_jump_date": 20230602,
+    "row_count": 1312
+  },
+  {
+    "ticker": "ICUCW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/icucw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210319,
+    "last_date": 20260428,
+    "max_jump_pct": 194.1,
+    "max_jump_date": 20230914,
+    "row_count": 1204
+  },
+  {
+    "ticker": "CNVS",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/cnvs.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 177.1,
+    "max_jump_date": 20200604,
+    "row_count": 5322
+  },
+  {
+    "ticker": "ABVEW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/abvew.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20240702,
+    "last_date": 20260428,
+    "max_jump_pct": 254.9,
+    "max_jump_date": 20250710,
+    "row_count": 454
+  },
+  {
+    "ticker": "NVAWW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/nvaww.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20240725,
+    "last_date": 20260427,
+    "max_jump_pct": 158.6,
+    "max_jump_date": 20251014,
+    "row_count": 322
+  },
+  {
+    "ticker": "COCHW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/cochw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20231003,
+    "last_date": 20260428,
+    "max_jump_pct": 508.9,
+    "max_jump_date": 20240228,
+    "row_count": 445
+  },
+  {
+    "ticker": "JSPR",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/jspr.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20200124,
+    "last_date": 20260428,
+    "max_jump_pct": 467.4,
+    "max_jump_date": 20230103,
+    "row_count": 1455
+  },
+  {
+    "ticker": "BIVI",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/bivi.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20200921,
+    "last_date": 20260428,
+    "max_jump_pct": 109.8,
+    "max_jump_date": 20241018,
+    "row_count": 1407
+  },
+  {
+    "ticker": "LGHL",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/lghl.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20200618,
+    "last_date": 20260428,
+    "max_jump_pct": 85.9,
+    "max_jump_date": 20251209,
+    "row_count": 1472
+  },
+  {
+    "ticker": "WIMI",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/wimi.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20200401,
+    "last_date": 20260428,
+    "max_jump_pct": 281.0,
+    "max_jump_date": 20200710,
+    "row_count": 1526
+  },
+  {
+    "ticker": "SDAWW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/sdaww.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210419,
+    "last_date": 20260428,
+    "max_jump_pct": 422.8,
+    "max_jump_date": 20221102,
+    "row_count": 925
+  },
+  {
+    "ticker": "BIDU",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/bidu.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050804,
+    "last_date": 20260428,
+    "max_jump_pct": 353.7,
+    "max_jump_date": 20050805,
+    "row_count": 5214
+  },
+  {
+    "ticker": "JAGX",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/jagx.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20150513,
+    "last_date": 20260428,
+    "max_jump_pct": 192.6,
+    "max_jump_date": 20190318,
+    "row_count": 2752
+  },
+  {
+    "ticker": "EUDA",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/euda.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20211216,
+    "last_date": 20260428,
+    "max_jump_pct": 89.7,
+    "max_jump_date": 20260423,
+    "row_count": 1029
+  },
+  {
+    "ticker": "BNZIW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/bnziw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210217,
+    "last_date": 20260428,
+    "max_jump_pct": 200.0,
+    "max_jump_date": 20230626,
+    "row_count": 968
+  },
+  {
+    "ticker": "ISPC",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/ispc.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210617,
+    "last_date": 20260428,
+    "max_jump_pct": 159.7,
+    "max_jump_date": 20250909,
+    "row_count": 1221
+  },
+  {
+    "ticker": "SAIHW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/saihw.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20240918,
+    "last_date": 20260424,
+    "max_jump_pct": 170.3,
+    "max_jump_date": 20240920,
+    "row_count": 178
+  },
+  {
+    "ticker": "PHAT",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/phat.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20191025,
+    "last_date": 20260428,
+    "max_jump_pct": 90.2,
+    "max_jump_date": 20250606,
+    "row_count": 1634
+  },
+  {
+    "ticker": "QSI",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/qsi.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20201118,
+    "last_date": 20260428,
+    "max_jump_pct": 119.6,
+    "max_jump_date": 20241120,
+    "row_count": 1354
+  },
+  {
+    "ticker": "ARBK",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/arbk.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210923,
+    "last_date": 20260428,
+    "max_jump_pct": 96.8,
+    "max_jump_date": 20250701,
+    "row_count": 1150
+  },
+  {
+    "ticker": "RADX",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/radx.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20241206,
+    "last_date": 20260428,
+    "max_jump_pct": 149.5,
+    "max_jump_date": 20251215,
+    "row_count": 343
+  },
+  {
+    "ticker": "XOSWW",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/xosww.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20201208,
+    "last_date": 20260427,
+    "max_jump_pct": 119.8,
+    "max_jump_date": 20250220,
+    "row_count": 1288
+  },
+  {
+    "ticker": "FFAI",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/ffai.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20200903,
+    "last_date": 20260428,
+    "max_jump_pct": 367.5,
+    "max_jump_date": 20240514,
+    "row_count": 1417
+  },
+  {
+    "ticker": "ADGM",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/adgm.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20240802,
+    "last_date": 20260428,
+    "max_jump_pct": 92.8,
+    "max_jump_date": 20250417,
+    "row_count": 435
+  },
+  {
+    "ticker": "JG",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/jg.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20180726,
+    "last_date": 20260428,
+    "max_jump_pct": 141.7,
+    "max_jump_date": 20250127,
+    "row_count": 1937
+  },
+  {
+    "ticker": "ATHE",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/athe.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 154.1,
+    "max_jump_date": 20200804,
+    "row_count": 5270
+  },
+  {
+    "ticker": "INSM",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/insm.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20110401,
+    "last_date": 20260428,
+    "max_jump_pct": 119.6,
+    "max_jump_date": 20170905,
+    "row_count": 3789
+  },
+  {
+    "ticker": "PLUR",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/plur.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260427,
+    "max_jump_pct": 107.8,
+    "max_jump_date": 20080407,
+    "row_count": 5300
+  },
+  {
+    "ticker": "GMEX",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/gmex.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20230808,
+    "last_date": 20260428,
+    "max_jump_pct": 81.8,
+    "max_jump_date": 20241218,
+    "row_count": 683
+  },
+  {
+    "ticker": "EZGO",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/ezgo.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210126,
+    "last_date": 20260428,
+    "max_jump_pct": 83.0,
+    "max_jump_date": 20230906,
+    "row_count": 1319
+  },
+  {
+    "ticker": "KUST",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/kust.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 127.4,
+    "max_jump_date": 20140710,
+    "row_count": 5016
+  },
+  {
+    "ticker": "AUUD",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/auud.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20210218,
+    "last_date": 20260428,
+    "max_jump_pct": 181.5,
+    "max_jump_date": 20230612,
+    "row_count": 1304
+  },
+  {
+    "ticker": "TIVC",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/tivc.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20211111,
+    "last_date": 20260427,
+    "max_jump_pct": 197.9,
+    "max_jump_date": 20250212,
+    "row_count": 1117
+  },
+  {
+    "ticker": "FGNX",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/fgnx.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20140401,
+    "last_date": 20260428,
+    "max_jump_pct": 84.2,
+    "max_jump_date": 20250801,
+    "row_count": 2943
+  },
+  {
+    "ticker": "CGC",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/cgc.us.txt",
+    "bucket": "nasdaq stocks",
+    "first_date": 20180525,
+    "last_date": 20260428,
+    "max_jump_pct": 81.4,
+    "max_jump_date": 20230911,
+    "row_count": 1991
+  },
+  {
+    "ticker": "ESBA",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/esba.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20131002,
+    "last_date": 20260428,
+    "max_jump_pct": 122.5,
+    "max_jump_date": 20131008,
+    "row_count": 2967
+  },
+  {
+    "ticker": "MITT",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/mitt.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20110705,
+    "last_date": 20260428,
+    "max_jump_pct": 110.3,
+    "max_jump_date": 20200608,
+    "row_count": 3726
+  },
+  {
+    "ticker": "HKD",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/hkd.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20220715,
+    "last_date": 20260428,
+    "max_jump_pct": 311.8,
+    "max_jump_date": 20220914,
+    "row_count": 950
+  },
+  {
+    "ticker": "UFI",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/ufi.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 212.1,
+    "max_jump_date": 20101104,
+    "row_count": 5325
+  },
+  {
+    "ticker": "KNTK",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/kntk.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20170502,
+    "last_date": 20260428,
+    "max_jump_pct": 204.5,
+    "max_jump_date": 20201105,
+    "row_count": 2137
+  },
+  {
+    "ticker": "PSQH-WS",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/psqh-ws.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20230721,
+    "last_date": 20260428,
+    "max_jump_pct": 548.7,
+    "max_jump_date": 20241203,
+    "row_count": 647
+  },
+  {
+    "ticker": "VLN-WS",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/vln-ws.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20211001,
+    "last_date": 20260428,
+    "max_jump_pct": 188.5,
+    "max_jump_date": 20260109,
+    "row_count": 1037
+  },
+  {
+    "ticker": "MS_A",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/ms_a.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20100823,
+    "last_date": 20260428,
+    "max_jump_pct": 896.3,
+    "max_jump_date": 20130204,
+    "row_count": 3943
+  },
+  {
+    "ticker": "FUBO",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/fubo.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20201008,
+    "last_date": 20260428,
+    "max_jump_pct": 251.4,
+    "max_jump_date": 20250106,
+    "row_count": 1394
+  },
+  {
+    "ticker": "SQNS",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/sqns.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20110419,
+    "last_date": 20260428,
+    "max_jump_pct": 111.7,
+    "max_jump_date": 20240823,
+    "row_count": 3778
+  },
+  {
+    "ticker": "CHMI_A",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/chmi_a.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20170823,
+    "last_date": 20260428,
+    "max_jump_pct": 85.4,
+    "max_jump_date": 20200319,
+    "row_count": 2163
+  },
+  {
+    "ticker": "GME",
+    "path": "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/gme.us.txt",
+    "bucket": "nyse stocks",
+    "first_date": 20050225,
+    "last_date": 20260428,
+    "max_jump_pct": 134.8,
+    "max_jump_date": 20210127,
+    "row_count": 5325
+  }
+]

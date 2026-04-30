@@ -1,0 +1,8 @@
+{
+  "total_scanned": 600,
+  "clean_count": 508,
+  "reuse_candidate_count": 92,
+  "contamination_rate_pct": 15.33,
+  "jump_threshold_pct": 80.0,
+  "sample_size_per_bucket": 300
+}

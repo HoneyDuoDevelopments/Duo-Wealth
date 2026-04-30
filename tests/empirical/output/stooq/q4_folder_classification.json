@@ -1,0 +1,233 @@
+{
+  "known_ticker_results": [
+    {
+      "ticker": "AAPL",
+      "expected": "nasdaq stocks",
+      "found_in": "nasdaq stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/aapl.us.txt"
+      ]
+    },
+    {
+      "ticker": "MSFT",
+      "expected": "nasdaq stocks",
+      "found_in": "nasdaq stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/msft.us.txt"
+      ]
+    },
+    {
+      "ticker": "TSLA",
+      "expected": "nasdaq stocks",
+      "found_in": "nasdaq stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/tsla.us.txt"
+      ]
+    },
+    {
+      "ticker": "NVDA",
+      "expected": "nasdaq stocks",
+      "found_in": "nasdaq stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/nvda.us.txt"
+      ]
+    },
+    {
+      "ticker": "META",
+      "expected": "nasdaq stocks",
+      "found_in": "nasdaq stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/2/meta.us.txt"
+      ]
+    },
+    {
+      "ticker": "GOOG",
+      "expected": "nasdaq stocks",
+      "found_in": "nasdaq stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/1/goog.us.txt"
+      ]
+    },
+    {
+      "ticker": "JPM",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/jpm.us.txt"
+      ]
+    },
+    {
+      "ticker": "GS",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/gs.us.txt"
+      ]
+    },
+    {
+      "ticker": "XOM",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/xom.us.txt"
+      ]
+    },
+    {
+      "ticker": "BAC",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/bac.us.txt"
+      ]
+    },
+    {
+      "ticker": "WMT",
+      "expected": "nyse stocks",
+      "found_in": "nasdaq stocks",
+      "correct": false,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq stocks/3/wmt.us.txt"
+      ]
+    },
+    {
+      "ticker": "JNJ",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/jnj.us.txt"
+      ]
+    },
+    {
+      "ticker": "BRK-B",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/brk-b.us.txt"
+      ]
+    },
+    {
+      "ticker": "V",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/2/v.us.txt"
+      ]
+    },
+    {
+      "ticker": "MA",
+      "expected": "nyse stocks",
+      "found_in": "nyse stocks",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse stocks/1/ma.us.txt"
+      ]
+    },
+    {
+      "ticker": "SPY",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/2/spy.us.txt"
+      ]
+    },
+    {
+      "ticker": "QQQ",
+      "expected": "nasdaq etfs",
+      "found_in": "nasdaq etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq etfs/qqq.us.txt"
+      ]
+    },
+    {
+      "ticker": "IWM",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/1/iwm.us.txt"
+      ]
+    },
+    {
+      "ticker": "MDY",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/1/mdy.us.txt"
+      ]
+    },
+    {
+      "ticker": "IJR",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/1/ijr.us.txt"
+      ]
+    },
+    {
+      "ticker": "DIA",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/1/dia.us.txt"
+      ]
+    },
+    {
+      "ticker": "VTI",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/2/vti.us.txt"
+      ]
+    },
+    {
+      "ticker": "VOO",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/2/voo.us.txt"
+      ]
+    },
+    {
+      "ticker": "GLD",
+      "expected": "nyse etfs",
+      "found_in": "nyse etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nyse etfs/1/gld.us.txt"
+      ]
+    },
+    {
+      "ticker": "TLT",
+      "expected": "nasdaq etfs",
+      "found_in": "nasdaq etfs",
+      "correct": true,
+      "paths": [
+        "/home/honey-duo/Desktop/d_us_txt (2)/data/daily/us/nasdaq etfs/tlt.us.txt"
+      ]
+    }
+  ],
+  "misclassified": [
+    "WMT"
+  ],
+  "etf_folder_suspicions_under_1_dollar": []
+}

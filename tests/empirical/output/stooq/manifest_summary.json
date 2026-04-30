@@ -1,0 +1,33 @@
+{
+  "total_files": 12029,
+  "reaches_2026_count": 11977,
+  "starts_before_2005_count": 318,
+  "has_in_scope_rows_count": 9899,
+  "by_bucket": {
+    "nasdaq etfs": {
+      "total": 938,
+      "reaches_2026": 933,
+      "has_in_scope_rows": 709
+    },
+    "nasdaq stocks": {
+      "total": 4592,
+      "reaches_2026": 4556,
+      "has_in_scope_rows": 3384
+    },
+    "nyse etfs": {
+      "total": 2552,
+      "reaches_2026": 2551,
+      "has_in_scope_rows": 2530
+    },
+    "nyse stocks": {
+      "total": 3641,
+      "reaches_2026": 3632,
+      "has_in_scope_rows": 3003
+    },
+    "nysemkt stocks": {
+      "total": 306,
+      "reaches_2026": 305,
+      "has_in_scope_rows": 273
+    }
+  }
+}

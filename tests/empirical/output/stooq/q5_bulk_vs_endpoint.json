@@ -1,0 +1,62 @@
+[
+  {
+    "ticker": "AAPL",
+    "description": "Active large-cap",
+    "d1": 20240101,
+    "d2": 20240115,
+    "url": "https://stooq.com/q/d/l/?s=aapl.us&d1=20240101&d2=20240115&i=d",
+    "http_status": 200,
+    "endpoint_data_rows": 6,
+    "bulk_rows_in_window": 9,
+    "common_date_count": 0,
+    "row_count_match": false,
+    "price_match_on_common_dates": true,
+    "price_mismatches": [],
+    "endpoint_first_line": "Get your apikey:"
+  },
+  {
+    "ticker": "MSFT",
+    "description": "Active large-cap control",
+    "d1": 20240101,
+    "d2": 20240115,
+    "url": "https://stooq.com/q/d/l/?s=msft.us&d1=20240101&d2=20240115&i=d",
+    "http_status": 200,
+    "endpoint_data_rows": 6,
+    "bulk_rows_in_window": 9,
+    "common_date_count": 0,
+    "row_count_match": false,
+    "price_match_on_common_dates": true,
+    "price_mismatches": [],
+    "endpoint_first_line": "Get your apikey:"
+  },
+  {
+    "ticker": "T",
+    "description": "High-dividend stock",
+    "d1": 20240101,
+    "d2": 20240115,
+    "url": "https://stooq.com/q/d/l/?s=t.us&d1=20240101&d2=20240115&i=d",
+    "http_status": 200,
+    "endpoint_data_rows": 6,
+    "bulk_rows_in_window": 9,
+    "common_date_count": 0,
+    "row_count_match": false,
+    "price_match_on_common_dates": true,
+    "price_mismatches": [],
+    "endpoint_first_line": "Get your apikey:"
+  },
+  {
+    "ticker": "SPY",
+    "description": "ETF",
+    "d1": 20240101,
+    "d2": 20240115,
+    "url": "https://stooq.com/q/d/l/?s=spy.us&d1=20240101&d2=20240115&i=d",
+    "http_status": 200,
+    "endpoint_data_rows": 6,
+    "bulk_rows_in_window": 9,
+    "common_date_count": 0,
+    "row_count_match": false,
+    "price_match_on_common_dates": true,
+    "price_mismatches": [],
+    "endpoint_first_line": "Get your apikey:"
+  }
+]

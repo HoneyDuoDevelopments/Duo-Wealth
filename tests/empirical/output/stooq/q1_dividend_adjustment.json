@@ -1,0 +1,60 @@
+[
+  {
+    "ticker": "T",
+    "test": "AT&T Q1 2023 ex-date",
+    "status": "TESTED",
+    "ex_date_found": 20230110,
+    "prior_day_found": 20230109,
+    "prior_close": 19.04,
+    "ex_close": 19.47,
+    "day_change": 0.43,
+    "pct_change": 2.258,
+    "dividend": 0.2775,
+    "interpretation": "PRICE_ROSE_ON_EX_DATE (market movement \u2014 cannot distinguish from single day)"
+  },
+  {
+    "ticker": "T",
+    "test": "AT&T Q3 2023 ex-date",
+    "status": "TESTED",
+    "ex_date_found": 20230710,
+    "prior_day_found": 20230707,
+    "prior_close": 15.61,
+    "ex_close": 15.27,
+    "day_change": -0.34,
+    "pct_change": -2.178,
+    "dividend": 0.2775,
+    "interpretation": "CONSISTENT_WITH_UNADJUSTED (price dropped ~dividend amount on ex-date)"
+  },
+  {
+    "ticker": "AAPL",
+    "test": "AAPL Q3 2024 ex-date",
+    "status": "TESTED",
+    "ex_date_found": 20240812,
+    "prior_day_found": 20240809,
+    "prior_close": 214.581,
+    "ex_close": 216.11,
+    "day_change": 1.529,
+    "pct_change": 0.713,
+    "dividend": 0.25,
+    "interpretation": "PRICE_ROSE_ON_EX_DATE (market movement \u2014 cannot distinguish from single day)"
+  },
+  {
+    "ticker": "MO",
+    "test": "Altria Dec 2023 ex-date (high yield)",
+    "status": "TESTED",
+    "ex_date_found": 20231214,
+    "prior_day_found": 20231213,
+    "prior_close": 42.02,
+    "ex_close": 42.11,
+    "day_change": 0.09,
+    "pct_change": 0.214,
+    "dividend": 0.94,
+    "interpretation": "DAY_CHANGE_TOO_SMALL_TO_DISTINGUISH (market noise dominates)"
+  },
+  {
+    "ticker": "T",
+    "test": "fractional_volume_check",
+    "fractional_vol_rows_2023": 0,
+    "total_rows_2023": 832
+  }
+]

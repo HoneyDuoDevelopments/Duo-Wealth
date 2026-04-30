@@ -1,0 +1,18 @@
+{
+  "pre_2009": {
+    "present": 0,
+    "absent": 4
+  },
+  "2009_2015": {
+    "present": 0,
+    "absent": 0
+  },
+  "2015_2020": {
+    "present": 0,
+    "absent": 5
+  },
+  "post_2020": {
+    "present": 2,
+    "absent": 5
+  }
+}
