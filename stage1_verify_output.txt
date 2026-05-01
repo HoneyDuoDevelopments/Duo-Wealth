@@ -1,0 +1,135 @@
+============================================================
+Stage 1 Identity Spine Load Verification
+============================================================
+
+0. Baseline row counts
+        table_name         | row_count 
+---------------------------+-----------
+ instrument_master         |      1246
+ ticker_identifier_history |      1246
+ universe_membership       |      1246
+(3 rows)
+
+
+1. instrument_master rows where born_date > death_date
+ bad_rows 
+----------
+        0
+(1 row)
+
+ instrument_id | born_date | death_date | lifecycle_status | source_confidence | notes 
+---------------+-----------+------------+------------------+-------------------+-------
+(0 rows)
+
+
+2. ticker_identifier_history rows where date_from > date_to
+ bad_rows 
+----------
+        0
+(1 row)
+
+ ticker_id | instrument_id | raw_ticker | normalized_ticker | source_ticker | exchange | date_from | date_to | source_name | source_confidence 
+-----------+---------------+------------+-------------------+---------------+----------+-----------+---------+-------------+-------------------
+(0 rows)
+
+
+3. universe_membership rows where date_from > date_to
+ bad_rows 
+----------
+        0
+(1 row)
+
+ membership_id | instrument_id | universe_code | date_from | date_to | source_name | source_confidence 
+---------------+---------------+---------------+-----------+---------+-------------+-------------------
+(0 rows)
+
+
+4. source_confidence counts by table
+        table_name         | source_confidence | row_count 
+---------------------------+-------------------+-----------
+ instrument_master         | inferred          |       745
+ instrument_master         | probable          |       501
+ ticker_identifier_history | inferred          |       745
+ ticker_identifier_history | probable          |       501
+ universe_membership       | inferred          |       745
+ universe_membership       | probable          |       501
+(6 rows)
+
+
+5. universe_membership rows with NULL date_to currently active
+ active_membership_rows 
+------------------------
+                    503
+(1 row)
+
+ universe_code | active_membership_rows 
+---------------+------------------------
+ SP500         |                    503
+(1 row)
+
+
+6. Tickers appearing more than twice in ticker_identifier_history
+ normalized_ticker | interval_count | first_date | last_date_or_active |                              intervals                              
+-------------------+----------------+------------+---------------------+---------------------------------------------------------------------
+ COV               |              3 | 1996-01-02 | 2015-01-27          | 1996-01-02→1996-08-16, 2007-07-02→2009-06-05, 2011-03-01→2015-01-27
+(1 row)
+
+
+7A. Hard-case raw rows
+ normalized_ticker | raw_ticker | source_ticker |            instrument_id             | issuer_id | date_from  |  date_to   | born_date  | death_date | lifecycle_status | source_confidence 
+-------------------+------------+---------------+--------------------------------------+-----------+------------+------------+------------+------------+------------------+-------------------
+ AAPL              | AAPL       | AAPL          | 1478a65f-4966-4e62-bafd-7b0750c2a749 |           | 1996-01-02 |            | 1996-01-02 |            | active           | inferred
+ CELG              | CELG       | CELG          | 4d90fa97-d0ac-46f3-b4fc-a8777d962c10 |           | 2006-11-06 | 2019-11-21 | 2006-11-06 | 2019-11-21 | delisted         | probable
+ DELL              | DELL       | DELL          | a657dfc5-f3d9-4d1c-8279-e9ea34adc1b2 |           | 1996-09-06 | 2013-10-29 | 1996-09-06 | 2013-10-29 | delisted         | inferred
+ DELL              | DELL       | DELL          | 6e5d8e65-f81a-4f31-8d6c-94f3419bcebf |           | 2024-09-23 |            | 2024-09-23 |            | active           | probable
+ GOOG              | GOOG       | GOOG          | 3a300b2c-fdcc-4428-9441-e8fc7067b1b0 |           | 2014-04-03 |            | 2014-04-03 |            | active           | probable
+ GOOGL             | GOOGL      | GOOGL         | e006caaa-c87c-4821-8bb8-313d20040ecc |           | 2006-04-03 |            | 2006-04-03 |            | active           | probable
+(6 rows)
+
+
+7B. Hard-case PASS/FAIL checks
+                 check_name                  | status |                                        detail                                         
+---------------------------------------------+--------+---------------------------------------------------------------------------------------
+ AAPL active, no end date                    | PASS   | 1996-01-02→ACTIVE
+ CELG end date = 2019-11-21                  | PASS   | 2006-11-06→2019-11-21
+ DELL exactly 2 rows                         | PASS   | count=2
+ DELL has 1996→2013 interval                 | PASS   | 1996-09-06→2013-10-29, 2024-09-23→ACTIVE
+ DELL has 2024→active interval               | PASS   | 1996-09-06→2013-10-29, 2024-09-23→ACTIVE
+ GOOG active, no end date                    | PASS   | 2014-04-03→ACTIVE
+ GOOG and GOOGL have different instrument_id | PASS   | GOOG=3a300b2c-fdcc-4428-9441-e8fc7067b1b0, GOOGL=e006caaa-c87c-4821-8bb8-313d20040ecc
+ GOOGL active, no end date                   | PASS   | 2006-04-03→ACTIVE
+(8 rows)
+
+
+8. Optional: currently active S&P 500 membership sample
+ normalized_ticker | date_from  | date_to |            instrument_id             
+-------------------+------------+---------+--------------------------------------
+ A                 | 2000-06-05 |         | f661b192-9e64-4b1e-939b-99f02ba28591
+ AAPL              | 1996-01-02 |         | 1478a65f-4966-4e62-bafd-7b0750c2a749
+ ABBV              | 2013-01-02 |         | 6bc2ef43-b9b7-497d-8ee9-12bb5526d32a
+ ABNB              | 2023-09-18 |         | a35bd857-aaa0-4afb-a0b0-442ecd0f83e5
+ ABT               | 1996-01-02 |         | 4315259b-7db2-4085-9b23-b6fd831c3584
+ ACGL              | 2022-11-01 |         | d1aa659b-ac6e-4d90-a2fa-58211541b5da
+ ACN               | 2011-07-06 |         | e05fc7ae-9baf-41bd-9264-fc6e9158afb9
+ ADBE              | 1997-05-06 |         | f42ddcbc-e17e-41af-aebc-862aa707ef0b
+ ADI               | 1999-10-12 |         | d4b528e4-c3d8-443e-8c0d-9c72896a290b
+ ADM               | 1996-01-02 |         | 508ccb4b-ed62-4a14-8942-f83b63314bd7
+ ADP               | 1996-01-02 |         | d4d4229b-51e5-462c-95f7-2ba2622be3ad
+ ADSK              | 1996-01-02 |         | 260cf7f3-af25-4a0c-8d98-4cca428e4a4c
+ AEE               | 1996-01-02 |         | 6cb04be4-5bab-4792-a670-9842f8fcd88f
+ AEP               | 1996-01-02 |         | 61067fe7-fa94-4695-a1bf-c71e7aafd3ad
+ AES               | 1998-10-02 |         | 9b1ae46c-9ee2-4439-bd3e-396385094014
+ AFL               | 1999-05-28 |         | 2ecf0dbd-693f-4a77-b178-8cc11b02d019
+ AIG               | 1996-01-02 |         | 7724cb50-1684-448b-b985-db662a6e1a09
+ AIZ               | 2007-04-10 |         | 689a5a1f-0426-4744-b8ff-006320970454
+ AJG               | 2016-05-31 |         | cab9da27-eacb-4e92-965f-a6f9eedb428e
+ AKAM              | 2007-07-12 |         | ba279021-e0ac-4557-a8eb-6f1e2e59564c
+ ALB               | 2016-07-01 |         | 78fce2c4-01e0-423b-bab9-5993ac3173d6
+ ALGN              | 2017-06-19 |         | 2eccce3f-932a-4f5f-b3e6-46826ef345b5
+ ALL               | 1996-01-02 |         | d1525329-08f2-4715-bfac-36af5b47c6e4
+ ALLE              | 2013-12-02 |         | d0113902-4657-410a-960a-51e4168dbace
+ AMAT              | 1996-01-02 |         | e0ae6d88-7149-410a-b0fb-ea7024dafe0c
+(25 rows)
+
+
+Verification complete.
