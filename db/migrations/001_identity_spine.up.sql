@@ -17,11 +17,11 @@
 --     deliberately after inspection
 --
 -- Sources ingested in later stages:
---   Stage 1.1: fja05680 sp500_ticker_start_end.csv
---   Stage 1.2: fja05680 S&P 500 Historical Components & Changes.csv
---   Stage 1.3: SEC company_tickers.json (current issuers only)
---   Stage 1.4: OpenFIGI mapping API
---   Stage 1.5: EDGAR individual submissions (delisted issuers)
+--   Stage 1: SEC company_tickers.json (active issuer bridge)
+--   Stage 1: EDGAR individual submissions (delisted issuer resolution)
+--   Stage 1: OpenFIGI mapping API (FIGI assignment)
+--   Stage 2: fja05680 sp500_ticker_start_end.csv (universe + provisional instruments)
+--   Stage 2: fja05680 S&P 500 Historical Components & Changes.csv (membership events)
 -- =============================================================================
 
 BEGIN;
