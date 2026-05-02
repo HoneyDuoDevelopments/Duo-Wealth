@@ -150,3 +150,24 @@ Adopt this 11-stage sequence as the canonical Phase 1 build plan. No separate AD
 - **Reference strategy suite composition.** `contracts/validation-protocol.md` flags this as a Phase 1B deliverable. Phase 1 does not block on it.
 
 - **Reverse-merger handling.** Stage 4 documents reverse-mergers as a known v1 limitation. Resolution path is unspecified; the limitation is accepted for v1 and surfaced explicitly in Stage 11's confidence report rather than hidden.
+
+---
+
+## Sequencing Note — 2026-05-01
+
+The fja05680 universe loader (canonical Stage 2 in this build plan) was implemented before the SEC identity spine (canonical Stage 1). This is a deviation from the stage ordering specified above and is documented here for the record.
+
+**Why this is defensible.** The schema in `db/migrations/001_identity_spine.up.sql` was designed with `instrument_master.issuer_id` nullable specifically so an instrument can exist with ticker evidence alone before CIK/issuer is resolved. Loading fja05680 first creates 1,246 provisional instruments with `issuer_id = NULL`, exactly the pattern the schema anticipated. Stage 1 work fills in those nulls without needing to recreate or modify any Stage 2 records.
+
+**Why the build plan body is not being rewritten.** The build plan's Stage 1 → Stage 2 ordering remains the right ordering for *future* identity-spine builds (e.g., MDY/IJR universe expansion). The deviation taken for the S&P 500 build is a one-time pragmatic choice driven by fja05680 being a clean local CSV vs. SEC's API surface, and it does not change the dependency graph for downstream stages.
+
+**Lock-in for Stage 1.** Stage 1 is not considered complete until both of the following are true:
+
+1. Active issuer bridge: every active fja05680 instrument (`death_date IS NULL`) has its `issuer_id` populated from SEC `company_tickers.json`, and a corresponding `issuer_master` row exists with `primary_cik` and `legal_name` set.
+2. Delisted issuer resolution: every delisted fja05680 instrument (`death_date IS NOT NULL`) has had a CIK lookup attempted via `data.sec.gov/submissions/CIK{10-digit}.json` keyed off the ticker history, and either:
+   - has `issuer_id` populated to a resolved `issuer_master` row, OR
+   - has an explicit `identifier_resolution_audit` row recording the unresolved status with reason
+
+No Stage 3 (press release validation) or later work begins until both conditions hold.
+
+**OpenFIGI integration timing.** OpenFIGI FIGI assignment happens within Stage 1 after issuer resolution, populating `figi_identifier_history` for every instrument where a compositeFIGI can be obtained. Active instruments will resolve cleanly; some delisted instruments (LEH, BSC) will not — those get explicit `figi_identifier_history` audit rows or are left out, with the rationale logged in `identifier_resolution_audit`.
